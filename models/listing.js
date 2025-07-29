@@ -10,7 +10,7 @@ const listingSchema = new Schema({
     description: String,
     image: {
         type:String,
-        set: (v)=> v==="" ? "https://unsplash.com/photos/trees-beside-white-house-IYfp2Ixe9nM" : v
+        set: (v)=> v==="" ? "https://dongardner.com/cdn/shop/articles/706-front-1.jpg?v=1713538108&width=1100" : v
     },
     price: Number,
     location: String,
@@ -20,7 +20,12 @@ const listingSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Review",
         },
-    ]
+    ],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+
+    }
 });
 
 listingSchema.post("findOneAndDelete", async(listing)=>{
