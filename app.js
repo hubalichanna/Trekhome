@@ -1,3 +1,8 @@
+if(process.env.NODE_ENV !="production"){
+  require("dotenv").config();
+}
+
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -42,9 +47,9 @@ const sessionOptions={
 };
 
 // Root Route
-app.get("/",(req,res)=>{
-    res.send("Root is working...")
-});
+// app.get("/",(req,res)=>{
+//     res.send("Root is working...")
+// });
 
 
 app.use(session(sessionOptions));
