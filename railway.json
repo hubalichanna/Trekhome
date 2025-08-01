@@ -1,0 +1,10 @@
+{
+  "build": {
+    "env": {},
+    "command": "npm install"
+  },
+  "deploy": {
+    "command": "node app.js",
+    "restart": true
+  }
+}
