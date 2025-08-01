@@ -1,18 +1,36 @@
-<footer>
-    <div class="f-info">
-        <div  class="f-info-socials">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-square-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
+<footer class="bg-light border-top mt-5 pt-4 pb-4 text-muted">
+  <div class="container">
+    <!-- Top Row -->
+    <div class="row gy-3 justify-content-between">
+      
+      <!-- Left: Navigation Links -->
+      <div class="col-12 col-md-6 d-flex flex-wrap gap-3">
+        <a href="/privacy" class="text-muted text-decoration-none">Privacy</a>
+        <a href="/terms" class="text-muted text-decoration-none">Terms</a>
+        <a href="/sitemap" class="text-muted text-decoration-none">Sitemap</a>
+        <a href="/support" class="text-muted text-decoration-none">Support</a>
+      </div>
+
+      <!-- Right: Socials and Settings -->
+      <div class="col-12 col-md-6 d-flex justify-content-md-end align-items-center gap-3 flex-wrap">
+        <div>
+          <i class="fa-solid fa-globe"></i> English (IN)
         </div>
-        <div class="f-into-brand">
-            &copy; 
-            TrekHome
-            Private Limited
+        <div>
+          <i class="fa-solid fa-dollar-sign"></i> USD
         </div>
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-muted text-decoration-none"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="text-muted text-decoration-none"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="text-muted text-decoration-none"><i class="fa-brands fa-twitter"></i></a>
         </div>
+      </div>
+
     </div>
+
+    <!-- Bottom Row -->
+    <div class="text-center mt-4 small">
+      &copy; <%= new Date().getFullYear() %> TrekHome, Inc. All rights reserved.
+    </div>
+  </div>
 </footer>
