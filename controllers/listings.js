@@ -87,3 +87,18 @@ module.exports.destroyListing = async (req, res) => {
   req.flash("success", "Listing Deleted!");
   res.redirect("/listings");
 };
+
+module.exports.renderEditForm = async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findById(id);
+
+  if (!listing) {
+    req.flash("error", "Listing not found!");
+    return res.redirect("/listings");
+  }
+
+  res.render("listings/edit.ejs", {
+    listing,
+    orignalImageUrl: listing.image.url || "", // fallback if no image
+  });
+};
