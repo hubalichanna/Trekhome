@@ -1,67 +1,96 @@
 <style>
-  .btn-search {
-    background-color: #fe424d;
-    color: white;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-    
-  }
+ /* Sidebar base style */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+  z-index: 1050;
+  transition: right 0.3s ease-in-out;
+  padding: 1rem;
+}
 
-  .btn-search:hover {
-    background-color: #fe424d;
-    color: white;
-  }
+/* Show sidebar */
+.sidebar.show {
+  right: 0;
+}
 
-  .btn-search i {
-    display: inline;
-  }
+/* Close button */
+.sidebar .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 
-  .form-control {
-    width: 350px;
-  }
+/* Ensure nav items look solid and spaced */
+.sidebar a.nav-link {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  display: block;
+  text-align: left;
+}
 
-  @media (max-width: 768px) {
-    .form-control {
-      width: 100px;
-    }
-  }
+.sidebar form {
+  margin-top: 1rem;
+}
 
-
-  .search-input{
-    border-radius:25px ;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    size: 0.5rem;
-  }
 </style>
+<nav class="navbar bg-body-light border-bottom sticky-top">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+    </a>
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
-      <span class="navbar-toggler-icon"></span>
+    <!-- Hamburger icon -->
+    <button class="btn d-md-none" onclick="toggleSidebar()">
+      <i class="fa-solid fa-bars fs-3"></i>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
-
-      <!-- 🟡 Search form (Center aligned) -->
-      <form class="d-flex mx-auto" role="search" >
-        <input class="form-control me-2 search-input" name="q" type="search" placeholder="Search Destination "  />
-        <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-      </form>
-
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
-        <% if (!currUser) { %>
-          <a class="nav-link" aria-current="page" href="/signup"><b>Sign Up</b></a>
-          <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %>
-        <% if (currUser) { %>
-          <a class="nav-link" href="/logout"><b>Logout</b></a>
-        <% } %>
-      </div>
+    <!-- Desktop nav links (hidden on mobile) -->
+    <div class="d-none d-md-flex align-items-center">
+      <a class="nav-link me-3" href="/listings">Explore</a>
+      <a class="nav-link me-3" href="/listings/new">Airbnb your home</a>
+      <% if (!currUser) { %>
+        <a class="nav-link me-3" href="/signup"><b>Sign Up</b></a>
+        <a class="nav-link me-3" href="/login"><b>Login</b></a>
+      <% } else { %>
+        <a class="nav-link me-3" href="/logout"><b>Logout</b></a>
+      <% } %>
     </div>
   </div>
 </nav>
+
+<!-- Sidebar Menu -->
+<div class="sidebar" id="mobileSidebar">
+  <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+
+  <a class="nav-link" href="/listings">Explore</a>
+  <a class="nav-link" href="/listings/new">Airbnb your home</a>
+  <% if (!currUser) { %>
+    <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+    <a class="nav-link" href="/login"><b>Login</b></a>
+  <% } else { %>
+    <a class="nav-link" href="/logout"><b>Logout</b></a>
+  <% } %>
+
+  <!-- Search inside sidebar -->
+  <form action="/listings" method="GET" role="search">
+    <input class="form-control search-input my-2" name="q" type="search" placeholder="Search Destination" />
+    <button class="btn btn-search w-100" type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i> Search
+    </button>
+  </form>
+</div>
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("mobileSidebar");
+    sidebar.classList.toggle("show");
+  }
+</script>
