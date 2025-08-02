@@ -1,34 +1,43 @@
 <% layout('/layouts/boilerplate') -%>
 <div class="container my-4">
   <div class="row">
-    <div class="col-12 col-md-8 offset-md-2">
-      <h3><%= listing.title %></h3>
-    </div>
+    
+   <!-- Title -->
+<div class="col-9 text-center mb-3">
+  <h3 class="h4 fw-bold"><%= listing.title %></h3> <!-- h4 = normal size -->
+</div>
 
-    <div class="card col-12 col-md-6 offset-md-3 mb-4 show-card listing-card">
-      <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="Listing_image">
-      <div class="card-body">
-        <p class="card-text"><i>Owned By <%= listing.owner.username %></i></p>
-        <p class="card-text"><%= listing.description %></p>
-        <p class="card-text">&#8360; <%= listing.price.toLocaleString("en-PK") %></p>
-        <p class="card-text"><%= listing.location %></p>
-        <p class="card-text"><%= listing.country %></p>
-      </div>
-    </div>
+<!-- Listing Card -->
+<div class="col-12 col-lg-6 offset-lg-2">
+  <div class="card mb-4 listing-card">
+    <img src="<%= listing.image.url %>" class="card-img-top show-img img-fluid" alt="Listing_image" style="max-height: 400px; object-fit: cover;"> <!-- Normal image height -->
 
+    <div class="card-body">
+      <p class="card-text text-muted mb-2"><i>Owned By <%= listing.owner.username %></i></p>
+      <p class="card-text" style="font-size: 1rem;"><%= listing.description %></p> <!-- Normal paragraph size -->
+      <p class="card-text">&#8360; <%= listing.price.toLocaleString("en-PK") %></p>
+      <p class="card-text"><%= listing.location %></p>
+      <p class="card-text"><%= listing.country %></p>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Edit/Delete Buttons -->
     <% if (currUser && listing.owner._id.equals(currUser._id)) { %>
-    <div class="col-12 d-flex justify-content-center flex-wrap gap-3 mb-4">
-      <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark editbtn">Edit</a>
-      <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+    <div class="col-12 text-center mb-4">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-2">Edit</a>
+      <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
         <button class="btn btn-dark">Delete</button>
       </form>
     </div>
     <% } %>
 
-    <hr>
+    <hr class="my-4">
 
-    <div class="col-12 col-md-8 offset-md-2 mb-3">
-      <% if (currUser) { %>
+    <!-- Review Form -->
+    <% if (currUser) { %>
+    <div class="col-12 col-lg-8 offset-lg-2 mb-4">
       <h4>Leave a Review</h4>
       <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
         <label for="rating" class="form-label">Rating</label>
@@ -54,13 +63,14 @@
           <div class="invalid-feedback">Please add some comments</div>
         </div>
 
-        <button class="btn btn-outline-dark mb-4">Submit</button>
+        <button class="btn btn-outline-dark mb-3">Submit</button>
       </form>
-      <% } %>
     </div>
+    <% } %>
 
+    <!-- All Reviews -->
     <% if (listing.reviews.length > 0) { %>
-    <div class="col-12 mb-4 px-3">
+    <div class="col-12 col-lg-8 offset-lg-2 mb-4">
       <h5><b>All Reviews</b></h5>
       <div class="row">
         <% for (let review of listing.reviews) { %>
@@ -83,14 +93,16 @@
     </div>
     <% } %>
 
-    <div class="col-12 col-md-6 offset-md-3 mb-5">
+    <!-- Map Section -->
+    <div class="col-12 col-lg-8 offset-lg-2 mb-5">
       <h4>Where You'll Be</h4>
       <div id="map" style="height: 300px;"></div>
     </div>
+
   </div>
 </div>
 
-<!-- Map JS -->
+<!-- Leaflet Map Script -->
 <script>
   const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
   const map = L.map('map').setView([coordinates[1], coordinates[0]], 13);
